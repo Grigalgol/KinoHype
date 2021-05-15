@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         buttonPop = findViewById(R.id.buttonPop);
         //по умолчанию
         chooseTypeOfMovies = Internet.POP;
+        buttonPop.setTextColor(getResources().getColor(R.color.chooseMovieType));
+
         recyclerViewImages = findViewById(R.id.receclerViewImages);
         adapterForMovie = new AdapterForMovie();
         //для показа фильмов сетками
@@ -49,30 +51,58 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
         adapterForMovie.setM(movies);
         buttonPop.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                //меняем цвет текста на кнопках
+                buttonPop.setTextColor(getResources().getColor(R.color.chooseMovieType));
+                buttonTop.setTextColor(getResources().getColor(R.color.defaultColor));
+                buttonBes.setTextColor(getResources().getColor(R.color.defaultColor));
                 JSONObject jsonObject = Internet.getJSONObjectfromInternet(Internet.POP, 1);
                 //получаем список фильмов
                 ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
                 adapterForMovie.setM(movies);
             }
         });
+
         buttonBes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //меняем цвет текста на кнопках
+                buttonPop.setTextColor(getResources().getColor(R.color.defaultColor));
+                buttonTop.setTextColor(getResources().getColor(R.color.defaultColor));
+                buttonBes.setTextColor(getResources().getColor(R.color.chooseMovieType));
                 JSONObject jsonObject = Internet.getJSONObjectfromInternet(Internet.BES, 1);
                 //получаем список фильмов
                 ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
                 adapterForMovie.setM(movies);
             }
         });
+
         buttonTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //меняем цвет текста на кнопках
+                buttonPop.setTextColor(getResources().getColor(R.color.defaultColor));
+                buttonTop.setTextColor(getResources().getColor(R.color.chooseMovieType));
+                buttonBes.setTextColor(getResources().getColor(R.color.defaultColor));
                 JSONObject jsonObject = Internet.getJSONObjectfromInternet(Internet.TOP, 1);
                 //получаем список фильмов
                 ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
                 adapterForMovie.setM(movies);
+            }
+        });
+        adapterForMovie.setOnImageMovieClickListener(new AdapterForMovie.OnImageMovieClickListener() {
+            @Override
+            public void omPosterClick(int position) {
+                //переопределяем метод
+            }
+        });
+        adapterForMovie.setOnSetInTheEnd(new AdapterForMovie.OnSetInTheEnd() {
+            @Override
+            public void onSetEnd() {
+                //переопределяем метод
+
             }
         });
     }

@@ -23,7 +23,7 @@
             android:background="#000000"
             android:padding="4dp"
             android:text="@string/pop"
-            android:textColor="@color/white"
+            android:textColor="@color/defaultColor"
             android:textSize="12sp"
             app:backgroundTint="#000000" />
 
@@ -35,7 +35,7 @@
             android:background="#000000"
             android:padding="4dp"
             android:text="@string/top"
-            android:textColor="@color/white"
+            android:textColor="@color/defaultColor"
             android:textSize="12sp"
             app:backgroundTint="#000000" />
 
@@ -47,7 +47,7 @@
             android:background="#000000"
             android:padding="4dp"
             android:text="@string/bes"
-            android:textColor="@color/white"
+            android:textColor="@color/defaultColor"
             android:textSize="12sp"
             app:backgroundTint="#000000" />
     </LinearLayout>

@@ -24,10 +24,30 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
 
     //массив фильмов
     private ArrayList<Movie> m;
+    private OnImageMovieClickListener onImageMovieClickListener;
+    private OnSetInTheEnd onSetInTheEnd;
 
     //пустой конструктор, в котором присваиваем значение
     public AdapterForMovie() {
         m = new ArrayList<>();
+    }
+
+    //слушатель на клик картинки
+    interface OnImageMovieClickListener {
+        void omPosterClick(int position);
+    }
+
+    //когда мы достигаем конца, мы подгружаем новые данные
+    interface OnSetInTheEnd {
+        void onSetEnd();
+    }
+
+    public void setOnImageMovieClickListener(OnImageMovieClickListener onImageMovieClickListener) {
+        this.onImageMovieClickListener = onImageMovieClickListener;
+    }
+
+    public void setOnSetInTheEnd(OnSetInTheEnd onSetInTheEnd) {
+        this.onSetInTheEnd = onSetInTheEnd;
     }
 
     @NonNull
@@ -39,6 +59,10 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder movieViewHolder, int i) {
+        //если достигли конца списка и слушатель onSetInTheEnd не равен 0
+        if (i > m.size()-6 && onSetInTheEnd != null) {
+            onSetInTheEnd.onSetEnd();
+        }
         //метод, который устанавливает в imageView картинку фильма из posterPath, спасибо, что объяснили пикассо
         Movie movie = m.get(i);
         Picasso.get().load(movie.getPosterPath()).into(movieViewHolder.imageViewSmallPoster);
@@ -56,6 +80,15 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSmallPoster = itemView.findViewById(R.id.iamgeViewMovie);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(onImageMovieClickListener != null) {
+                        //передаем позицию адаптера
+                        onImageMovieClickListener.omPosterClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
     //сеттер для установки нового массива
