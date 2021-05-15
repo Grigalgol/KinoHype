@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">KinoHype</string>
+    <string name="mageMovie">Картинка фильма</string>
+    <string name="Bes">Бестселлеры</string>
+    <string name="Top">Наивысший рейтинг</string>
+    <string name="Pop">Популярное</string>
+    <string name="pop">Популярные фильмы</string>
+    <string name="top">Наивысший рейтинг</string>
+    <string name="bes">Бестселлеры в мире кино</string>
 </resources>
