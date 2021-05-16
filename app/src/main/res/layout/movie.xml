@@ -7,3 +7,4 @@
     android:id="@+id/iamgeViewMovie"
     android:contentDescription="@string/mageMovie">
 </ImageView>
+

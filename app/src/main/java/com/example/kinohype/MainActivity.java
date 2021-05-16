@@ -1,6 +1,9 @@
 package com.example.kinohype;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,10 +16,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.kinohype.data.Movie;
+import com.example.kinohype.data.ViewModel;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,12 +31,15 @@ public class MainActivity extends AppCompatActivity {
     private AdapterForMovie adapterForMovie;
     private RecyclerView recyclerViewImages;
 
+    private ViewModel viewModel;
+
     int chooseTypeOfMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         //кнопки для переключения подборки кино
         buttonTop = findViewById(R.id.buttonTop);
         buttonBes = findViewById(R.id.buttonBes);
@@ -58,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonPop.setTextColor(getResources().getColor(R.color.chooseMovieType));
                 buttonTop.setTextColor(getResources().getColor(R.color.defaultColor));
                 buttonBes.setTextColor(getResources().getColor(R.color.defaultColor));
-                JSONObject jsonObject = Internet.getJSONObjectfromInternet(Internet.POP, 1);
-                //получаем список фильмов
-                ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
-                adapterForMovie.setM(movies);
+                downloadData(Internet.POP, 1);
             }
         });
 
@@ -72,10 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonPop.setTextColor(getResources().getColor(R.color.defaultColor));
                 buttonTop.setTextColor(getResources().getColor(R.color.defaultColor));
                 buttonBes.setTextColor(getResources().getColor(R.color.chooseMovieType));
-                JSONObject jsonObject = Internet.getJSONObjectfromInternet(Internet.BES, 1);
-                //получаем список фильмов
-                ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
-                adapterForMovie.setM(movies);
+                downloadData(Internet.BES, 1);
             }
         });
 
@@ -86,10 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonPop.setTextColor(getResources().getColor(R.color.defaultColor));
                 buttonTop.setTextColor(getResources().getColor(R.color.chooseMovieType));
                 buttonBes.setTextColor(getResources().getColor(R.color.defaultColor));
-                JSONObject jsonObject = Internet.getJSONObjectfromInternet(Internet.TOP, 1);
-                //получаем список фильмов
-                ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
-                adapterForMovie.setM(movies);
+                downloadData(Internet.TOP, 1);
             }
         });
         adapterForMovie.setOnImageMovieClickListener(new AdapterForMovie.OnImageMovieClickListener() {
@@ -105,5 +104,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        LiveData<List<Movie>> moviesLiveData = viewModel.getMovies();
+        moviesLiveData.observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                adapterForMovie.setM(movies);
+            }
+        });
+    }
+    private void downloadData(int method, int page) {
+        JSONObject jsonObject = Internet.getJSONObjectfromInternet(method, page);
+        //получаем список фильмов
+        ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
+        if(movies != null && !movies.isEmpty()) {
+            //очищаем старые данные
+            viewModel.deleteAllMovies();
+            //вставляем новые данные в цикле
+            for(Movie movie : movies) {
+                viewModel.insertMovie(movie);
+            }
+        }
     }
 }

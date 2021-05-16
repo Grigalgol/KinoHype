@@ -19,11 +19,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieViewHolder> {
 
     //массив фильмов
-    private ArrayList<Movie> m;
+    private List<Movie> m;
     private OnImageMovieClickListener onImageMovieClickListener;
     private OnSetInTheEnd onSetInTheEnd;
 
@@ -65,6 +66,7 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
         }
         //метод, который устанавливает в imageView картинку фильма из posterPath, спасибо, что объяснили пикассо
         Movie movie = m.get(i);
+        //изменить качество картинки можно тут (себе на будущее)
         Picasso.get().load(movie.getPosterPath()).into(movieViewHolder.imageViewSmallPoster);
     }
 
@@ -92,19 +94,19 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
         }
     }
     //сеттер для установки нового массива
-    public void setM(ArrayList<Movie> movies) {
+    public void setM(List<Movie> movies) {
         m = movies;
         //оповещаем адаптер
         notifyDataSetChanged();
     }
     //метод для добавления новых фильмов, не удаляя старые
-    public void addM(ArrayList<Movie> movies) {
+    public void addM(List<Movie> movies) {
         this.m.addAll(movies);
         //оповещаем адаптер
         notifyDataSetChanged();
     }
     //геттер, может понадобится в будущем
-    public ArrayList<Movie> getMovies() {
+    public List<Movie> getMovies() {
         return m;
     }
 }

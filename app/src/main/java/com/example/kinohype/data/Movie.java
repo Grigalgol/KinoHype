@@ -1,6 +1,11 @@
 package com.example.kinohype.data;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName =  "moviesTable")
 public class Movie {
+    @PrimaryKey
     //значения (теги)
     private int id;
     private String title;
