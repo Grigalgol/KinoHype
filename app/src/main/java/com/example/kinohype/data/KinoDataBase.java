@@ -7,7 +7,7 @@ import androidx.room.Delete;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = Movie.class, version = 1, exportSchema = false)
+@Database(entities = {Movie.class, LoveMovie.class}, version = 2, exportSchema = false)
 public abstract class KinoDataBase extends RoomDatabase {
 
     private static String nameDB = "movies.db";
@@ -18,7 +18,7 @@ public abstract class KinoDataBase extends RoomDatabase {
         synchronized (L) {
             if (dataBase == null) {
                 //создаем базу данных
-                dataBase = Room.databaseBuilder(context, KinoDataBase.class, nameDB).build();
+                dataBase = Room.databaseBuilder(context, KinoDataBase.class, nameDB).fallbackToDestructiveMigration().build();
             }
         }
         return dataBase;

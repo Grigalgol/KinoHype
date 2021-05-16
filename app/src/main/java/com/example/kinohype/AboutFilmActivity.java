@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.kinohype.data.LoveMovie;
 import com.example.kinohype.data.Movie;
 import com.example.kinohype.data.ViewModel;
 import com.squareup.picasso.Picasso;
@@ -16,18 +19,22 @@ public class AboutFilmActivity extends AppCompatActivity {
 
     private int filmId;
 
+    private ImageView imageViewLove;
     private ImageView imageViewPoster;
     private TextView textViewTitle;
     private TextView textViewOriginalTitleplusDataOfRelease;
     private TextView textViewOwerview;
     private TextView textViewRaitingValue;
     private ViewModel viewModel;
+    private Movie movie;
+    private LoveMovie loveMovie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_film);
         imageViewPoster = findViewById(R.id.imageViewPoster);
+        imageViewLove = findViewById(R.id.imageView3);
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewOriginalTitleplusDataOfRelease = findViewById(R.id.textViewOriginalTitle);
         textViewOwerview = findViewById(R.id.textViewOwerview);
@@ -41,7 +48,7 @@ public class AboutFilmActivity extends AppCompatActivity {
         }
         //получаем фильм
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
-        Movie movie = viewModel.getMovieById(filmId);
+        movie = viewModel.getMovieById(filmId);
         //с помощью пикассо устанавливаем картинку фильма (постер)
         Picasso.get().load(movie.getBigPosterPath()).into(imageViewPoster);
         //устанавливаем данные из класса Movie
@@ -55,5 +62,25 @@ public class AboutFilmActivity extends AppCompatActivity {
         if(raiting>=6 && raiting<8) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color6_8));
         if(raiting>=8 && raiting<9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color8_9));
         if(raiting>=9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color9_10));
+        setLove();
+    }
+    //метод добавления в любимые фильмы путем нажатия на сердечко
+    public void onClickFavorite(View view) {
+        //проверка на наличие фильма
+        if(loveMovie == null) {
+            //пришлось создать конструктор, так как родительский класс нельзя передавать
+            viewModel.insertLoveMovie(new LoveMovie(movie));
+            Toast.makeText(this, "Фильм успешно добавлен в раздел Избранное", Toast.LENGTH_SHORT).show();
+        } else {
+            viewModel.deleteLoveMovie(loveMovie);
+            Toast.makeText(this, "Фильм успешно исключен из раздела Избранное", Toast.LENGTH_SHORT).show();
+        }
+        setLove();
+    }
+
+    private void setLove() {
+        loveMovie = viewModel.getLoveMovieById(filmId);
+        if (loveMovie == null) imageViewLove.setImageResource(R.drawable.hearttouch);
+        else imageViewLove.setImageResource(R.drawable.heartnotouch);
     }
 }

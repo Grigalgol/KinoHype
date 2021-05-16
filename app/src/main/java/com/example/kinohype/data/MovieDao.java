@@ -14,13 +14,24 @@ public interface MovieDao {
     @Query("SELECT * FROM moviesTable")
     LiveData<List<Movie>> getAllMovies();
 
+    @Query("SELECT * FROM loveMoviesTable")
+    LiveData<List<LoveMovie>> getAllLoveMovies();
+
     //метод получения фильма
     @Query("SELECT * FROM moviesTable WHERE id== :idMovie")
     Movie getMovieById(int idMovie);
 
+    //метод получения фильма
+    @Query("SELECT * FROM loveMoviesTable WHERE id== :idMovie")
+    LoveMovie getLoveMovieById(int idMovie);
+
+
     //метод вставки
     @Insert
     void insertMovieInto(Movie m);
+
+    @Insert
+    void insertLoveInto(LoveMovie m);
 
     //метод удаления данных
     @Query("DELETE from moviesTable")
@@ -29,4 +40,7 @@ public interface MovieDao {
     //метод удаления 1 фильма
     @Delete
     void deleteMovie(Movie movie);
+
+    @Delete
+    void deleteLoveMovie(LoveMovie movie);
 }
