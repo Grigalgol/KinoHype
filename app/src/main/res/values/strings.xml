@@ -10,4 +10,5 @@
     <string name="Raiting">Рейтинг</string>
     <string name="menu_main">Главная</string>
     <string name="menu_love">Избранное</string>
+    <string name="touch_trailer">Запустить трейлер</string>
 </resources>

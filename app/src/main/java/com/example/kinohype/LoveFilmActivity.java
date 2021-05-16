@@ -73,7 +73,7 @@ public class LoveFilmActivity extends AppCompatActivity {
                 }
             }
         });
-        
+
         adapter.setOnImageMovieClickListener(new AdapterForMovie.OnImageMovieClickListener() {
             @Override
             public void omPosterClick(int position) {

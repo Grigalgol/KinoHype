@@ -18,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 public class Internet {
     private static String site = "https://www.themoviedb.org/"; //сайт для получения фильмов
 
+    private static String baseURLreviews = "https://api.themoviedb.org/3/movie/%s/reviews";
+    private static String baseURLvideo = "https://api.themoviedb.org/3/movie/%s/videos";
     private static String apikey = "3471f739f0d9ecfeace2ffbbc4432052"; //api ключ
     private static String baseurl = "https://api.themoviedb.org/3/discover/movie"; //базовый url
     //параметры для запроса
@@ -31,6 +33,28 @@ public class Internet {
     public static int POP = 0;
     public static int TOP = 1;
     public static int BES = 2;
+
+    private static URL buildURLTiTrailer(int id) {
+        //геним ссылку
+        Uri uri = Uri.parse(String.format(baseURLvideo, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, LANGUAGE).build();
+        try {
+            return new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static URL buildURLToReviews(int id) {
+        //геним ссылку
+        Uri uri = Uri.parse(String.format(baseURLreviews, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, LANGUAGE).build();
+        try {
+            return new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     private static URL buildURL(int s, int page) {
@@ -91,6 +115,32 @@ public class Internet {
             }
             return res;
         }
+    }
+
+    public static JSONObject getJSONReviewsfromInternet(int id) {
+        JSONObject res = null;
+        URL url = buildURLToReviews(id);
+        try {
+            res = new JsonTask().execute(url).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public static JSONObject getJSONTrailerfromInternet(int id) {
+        JSONObject res = null;
+        URL url = buildURLTiTrailer(id);
+        try {
+            res = new JsonTask().execute(url).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     public static JSONObject getJSONObjectfromInternet(int s, int page) {

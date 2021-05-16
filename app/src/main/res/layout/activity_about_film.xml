@@ -102,5 +102,25 @@
             app:srcCompat="@drawable/hearttouch"
             android:onClick="onClickFavorite"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTrailers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewValueRaiting"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewReviews"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewTrailers"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -43,11 +43,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="layoutResourceFile" />
         <option value="Interface" />
         <option value="valueResourceFile" />
-        <option value="Class" />
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -177,10 +177,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="674" y="139" key="#com.intellij.ide.util.MemberChooser" timestamp="1621166649462">
+    <state x="674" y="139" key="#com.intellij.ide.util.MemberChooser" timestamp="1621188915398">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="674" y="139" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1621166649462" />
+    <state x="674" y="139" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1621188915398" />
     <state x="887" y="340" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1620924396150">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -193,14 +193,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="951" y="297" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1536.824@0.0.1536.824" timestamp="1620924397960" />
-    <state x="698" y="170" key="AndroidCreateResourceFileDialog" timestamp="1621178286706">
+    <state x="698" y="170" key="AndroidCreateResourceFileDialog" timestamp="1621186573324">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="698" y="170" key="AndroidCreateResourceFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1621178286706" />
-    <state x="614" y="202" key="AndroidCreateXmlResourceDialog" timestamp="1621178467494">
+    <state x="698" y="170" key="AndroidCreateResourceFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1621186573324" />
+    <state x="614" y="202" key="AndroidCreateXmlResourceDialog" timestamp="1621187860834">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="614" y="202" key="AndroidCreateXmlResourceDialog/0.0.1536.824@0.0.1536.824" timestamp="1621178467494" />
+    <state x="614" y="202" key="AndroidCreateXmlResourceDialog/0.0.1536.824@0.0.1536.824" timestamp="1621187860834" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1621156144977">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -225,9 +225,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1620932361689" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1621167598231">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1621190159990">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1621167598231" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1621190159990" />
   </component>
 </project>

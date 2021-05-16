@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,8 +21,14 @@ import android.widget.Toast;
 
 import com.example.kinohype.data.LoveMovie;
 import com.example.kinohype.data.Movie;
+import com.example.kinohype.data.Review;
+import com.example.kinohype.data.Trailer;
 import com.example.kinohype.data.ViewModel;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class AboutFilmActivity extends AppCompatActivity {
 
@@ -58,6 +68,10 @@ public class AboutFilmActivity extends AppCompatActivity {
     private ViewModel viewModel;
     private Movie movie;
     private LoveMovie loveMovie;
+    private RecyclerView recyclerViewTrailers;
+    private RecyclerView recyclerViewReviews;
+    private ReviewAdapter reviewAdapter;
+    private TrailerAdapter trailerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +108,32 @@ public class AboutFilmActivity extends AppCompatActivity {
         if(raiting>=8 && raiting<9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color8_9));
         if(raiting>=9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color9_10));
         setLove();
+        recyclerViewTrailers = findViewById(R.id.recyclerViewTrailers);
+        recyclerViewReviews = findViewById(R.id.recyclerViewReviews);
+        reviewAdapter = new ReviewAdapter();
+        trailerAdapter = new TrailerAdapter();
+        trailerAdapter.setOnTraileClickListener(new TrailerAdapter.OnTraileClickListener() {
+            @Override
+            public void onTrailerClick(String url) {
+                //неявный интент
+                Intent intentTrailer = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intentTrailer);
+            }
+        });
+        recyclerViewReviews.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewTrailers.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewReviews.setAdapter(reviewAdapter);
+        recyclerViewTrailers.setAdapter(trailerAdapter);
         //меняем заголовок экшн бара на название кино
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(movie.getTitle());
+        JSONObject jsonObjectTrailers = Internet.getJSONTrailerfromInternet(movie.getId());
+        JSONObject jsonObjectReviews = Internet.getJSONReviewsfromInternet(movie.getId());
+        //получаем из объектов json трейлеры и отзывы
+        ArrayList<Trailer> trailers = JSONformat.getTrailersJSON(jsonObjectTrailers);
+        ArrayList<Review> reviews = JSONformat.getReviewsJSON(jsonObjectReviews);
+        reviewAdapter.setReviews(reviews);
+        trailerAdapter.setTrailers(trailers);
     }
     //метод добавления в любимые фильмы путем нажатия на сердечко
     public void onClickFavorite(View view) {
