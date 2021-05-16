@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="chooseMovieType">#FFFFFFFF</color>
     <color name="defaultColor">	#CDC9C9</color>
+    <color name="color0_2.5">#8B0000</color>
+    <color name="color2.5_6">#FF0000</color>
+    <color name="color6_8">#FFFF00</color>
+    <color name="color8_9">#32CD32</color>
+    <color name="color9_10">#00FF00</color>
 </resources>

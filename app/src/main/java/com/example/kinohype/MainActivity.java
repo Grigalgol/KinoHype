@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -95,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void omPosterClick(int position) {
                 //переопределяем метод
+                Movie movie = adapterForMovie.getMovies().get(position);
+                //создаем интент и отправляем в новую активность наш фильмец
+                Intent intentGoToFilm = new Intent(MainActivity.this, AboutFilmActivity.class);
+                intentGoToFilm.putExtra("id", movie.getId());
+                startActivity(intentGoToFilm);
             }
         });
         adapterForMovie.setOnSetInTheEnd(new AdapterForMovie.OnSetInTheEnd() {
