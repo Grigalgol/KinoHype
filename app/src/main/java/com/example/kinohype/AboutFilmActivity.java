@@ -1,10 +1,15 @@
 package com.example.kinohype;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +21,31 @@ import com.example.kinohype.data.ViewModel;
 import com.squareup.picasso.Picasso;
 
 public class AboutFilmActivity extends AppCompatActivity {
+
+    //переопределяем метод с меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //чтобы реагировать на нажатию в менб переопределяем метод
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.love:
+                Intent intent1 = new Intent(this, LoveFilmActivity.class);
+                startActivity(intent1);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private int filmId;
 
@@ -57,12 +87,16 @@ public class AboutFilmActivity extends AppCompatActivity {
         textViewOwerview.setText(movie.getOverview());
         double raiting = movie.getVoteAverage();
         textViewRaitingValue.setText(Double.toString(raiting));
+        //в зависимости от рейтинга меняем его цвет
         if(raiting<2.5) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color0_2_5));
         if(raiting>=2.5 && raiting<6) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color2_5_6));
         if(raiting>=6 && raiting<8) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color6_8));
         if(raiting>=8 && raiting<9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color8_9));
         if(raiting>=9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color9_10));
         setLove();
+        //меняем заголовок экшн бара на название кино
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(movie.getTitle());
     }
     //метод добавления в любимые фильмы путем нажатия на сердечко
     public void onClickFavorite(View view) {
@@ -77,7 +111,6 @@ public class AboutFilmActivity extends AppCompatActivity {
         }
         setLove();
     }
-
     private void setLove() {
         loveMovie = viewModel.getLoveMovieById(filmId);
         if (loveMovie == null) imageViewLove.setImageResource(R.drawable.hearttouch);

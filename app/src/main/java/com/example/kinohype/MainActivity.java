@@ -1,5 +1,6 @@
 package com.example.kinohype;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -9,9 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -33,6 +38,31 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewImages;
 
     private ViewModel viewModel;
+
+    //переопределяем метод с меню
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //чтобы реагировать на нажатию в менб переопределяем метод
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.menu:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.love:
+                Intent intent1 = new Intent(this, LoveFilmActivity.class);
+                startActivity(intent1);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     int chooseTypeOfMovies;
 
