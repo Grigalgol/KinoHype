@@ -1,11 +1,13 @@
 package com.example.kinohype.data;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName =  "moviesTable")
 public class Movie {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    private int uniqId;
     //значения (теги)
     private int id;
     private String title;
@@ -18,6 +20,21 @@ public class Movie {
     private double voteAverage;
     private String dataOfRelease;
 
+    public Movie(int uniqId, int id, String title, String original_title, int voteCount, String overview, String backdropPath, String bigPosterPath, String posterPath, double voteAverage, String dataOfRelease) {
+        this.uniqId = uniqId;
+        this.id = id;
+        this.title = title;
+        this.original_title = original_title;
+        this.voteCount = voteCount;
+        this.overview = overview;
+        this.backdropPath = backdropPath;
+        this.bigPosterPath = bigPosterPath;
+        this.posterPath = posterPath;
+        this.voteAverage = voteAverage;
+        this.dataOfRelease = dataOfRelease;
+    }
+
+    @Ignore
     public Movie(int id, String title, String original_title, int voteCount, String overview, String backdropPath, String bigPosterPath, String posterPath, double voteAverage, String dataOfRelease) {
         this.id = id;
         this.title = title;
@@ -70,6 +87,11 @@ public class Movie {
     public String getDataOfRelease() {
         return dataOfRelease;
     }
+
+    public int getUniqId() {
+        return uniqId;
+    }
+
     //сеттеры
 
 
@@ -108,6 +130,10 @@ public class Movie {
 
     public void setDataOfRelease(String dataOfRelease) {
         this.dataOfRelease = dataOfRelease;
+    }
+
+    public void setUniqId(int uniqId) {
+        this.uniqId = uniqId;
     }
 
     public void setBigPosterPath(String bigPosterPath) {
