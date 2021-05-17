@@ -27,6 +27,7 @@ public class Internet {
     private static String params_apikey = "api_key";
     private static String params_language = "language";
     private static String params_sortby = "sort_by";
+    private static String params_votecounte = "vote_count.gte";
     //значение для языка
     private static String LANGUAGE = "ru-RU";
     //ключи для подборки фильмов
@@ -70,7 +71,7 @@ public class Internet {
                 sort = "revenue.desc";
                 break;
         }
-        Uri uri = Uri.parse(baseurl).buildUpon().appendQueryParameter(params_language, LANGUAGE).appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_sortby, sort).appendQueryParameter(params_page, Integer.toString(page)).build();
+        Uri uri = Uri.parse(baseurl).buildUpon().appendQueryParameter(params_language, LANGUAGE).appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_sortby, sort).appendQueryParameter(params_votecounte, "500").appendQueryParameter(params_page, Integer.toString(page)).build();
         //результат
         URL result = null;
         try {
