@@ -35,15 +35,14 @@ public class Internet {
     private static String params_sortby = "sort_by";
     private static String params_votecounte = "vote_count.gte";
     //значение для языка
-    private static String LANGUAGE = "ru-RU";
     //ключи для подборки фильмов
     public static int POP = 0;
     public static int TOP = 1;
     public static int BES = 2;
 
-    public static URL buildURLTiTrailer(int id) {
+    public static URL buildURLTiTrailer(int id, String lang) {
         //геним ссылку
-        Uri uri = Uri.parse(String.format(baseURLvideo, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, LANGUAGE).build();
+        Uri uri = Uri.parse(String.format(baseURLvideo, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, lang).build();
         try {
             return new URL(uri.toString());
         } catch (MalformedURLException e) {
@@ -52,9 +51,9 @@ public class Internet {
         return null;
     }
 
-    public static URL buildURLToReviews(int id) {
+    public static URL buildURLToReviews(int id, String lang) {
         //геним ссылку
-        Uri uri = Uri.parse(String.format(baseURLreviews, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, LANGUAGE).build();
+        Uri uri = Uri.parse(String.format(baseURLreviews, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, lang).build();
         try {
             return new URL(uri.toString());
         } catch (MalformedURLException e) {
@@ -64,7 +63,7 @@ public class Internet {
     }
 
 
-    public static URL buildURL(int s, int page) {
+    public static URL buildURL(int s, int page, String lang) {
         String sort = null;
         switch (s) {
             case 0:
@@ -77,7 +76,7 @@ public class Internet {
                 sort = "revenue.desc";
                 break;
         }
-        Uri uri = Uri.parse(baseurl).buildUpon().appendQueryParameter(params_language, LANGUAGE).appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_sortby, sort).appendQueryParameter(params_votecounte, "500").appendQueryParameter(params_page, Integer.toString(page)).build();
+        Uri uri = Uri.parse(baseurl).buildUpon().appendQueryParameter(params_language, lang).appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_sortby, sort).appendQueryParameter(params_votecounte, "500").appendQueryParameter(params_page, Integer.toString(page)).build();
         //результат
         URL result = null;
         try {
@@ -198,9 +197,9 @@ public class Internet {
         }
     }
 
-    public static JSONObject getJSONReviewsfromInternet(int id) {
+    public static JSONObject getJSONReviewsfromInternet(int id, String lang) {
         JSONObject res = null;
-        URL url = buildURLToReviews(id);
+        URL url = buildURLToReviews(id, lang);
         try {
             res = new JsonTask().execute(url).get();
         } catch (ExecutionException e) {
@@ -211,9 +210,9 @@ public class Internet {
         return res;
     }
 
-    public static JSONObject getJSONTrailerfromInternet(int id) {
+    public static JSONObject getJSONTrailerfromInternet(int id, String lang) {
         JSONObject res = null;
-        URL url = buildURLTiTrailer(id);
+        URL url = buildURLTiTrailer(id, lang);
         try {
             res = new JsonTask().execute(url).get();
         } catch (ExecutionException e) {
@@ -224,9 +223,9 @@ public class Internet {
         return res;
     }
 
-    public static JSONObject getJSONObjectfromInternet(int s, int page) {
+    public static JSONObject getJSONObjectfromInternet(int s, int page, String lang) {
         JSONObject res = null;
-        URL url = buildURL(s, page);
+        URL url = buildURL(s, page, lang);
         try {
             res = new JsonTask().execute(url).get();
         } catch (ExecutionException e) {

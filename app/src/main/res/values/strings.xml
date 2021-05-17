@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">KinoHype</string>
-    <string name="mageMovie">Картинка фильма</string>
-    <string name="Bes">Бестселлеры</string>
-    <string name="Top">Наивысший рейтинг</string>
-    <string name="Pop">Популярное</string>
-    <string name="pop">Популярные фильмы</string>
-    <string name="top">Наивысший рейтинг</string>
-    <string name="bes">Бестселлеры в мире кино</string>
-    <string name="Raiting">Рейтинг</string>
-    <string name="menu_main">Главная</string>
-    <string name="menu_love">Избранное</string>
-    <string name="touch_trailer">Запустить трейлер</string>
+    <string name="mageMovie">Movie Image</string>
+    <string name="Bes">Bestsellers</string>
+    <string name="Top">Raiting</string>
+    <string name="Pop">Popular</string>
+    <string name="pop">Popular films</string>
+    <string name="top">Raiting films</string>
+    <string name="bes">Bestsellers films</string>
+    <string name="Raiting">Raiting</string>
+    <string name="menu_main">Main</string>
+    <string name="menu_love">Favourite</string>
+    <string name="touch_trailer">Launch the trailer</string>
 </resources>

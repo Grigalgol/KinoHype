@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -32,8 +33,13 @@ import org.json.JSONObject;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONObject> {
+    //язык приложения
+
+    private static String lang;
+
 
     private Button buttonPop;
     private Button buttonTop;
@@ -82,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        lang = Locale.getDefault().getLanguage();
         //отвечает за загрузки в приложении
         loaderManager = LoaderManager.getInstance(this);
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
@@ -99,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         recyclerViewImages.setLayoutManager(new GridLayoutManager(this, 2));
         //устанавливаем адаптер для recyclerview
         recyclerViewImages.setAdapter(adapterForMovie);
-        JSONObject jsonObject = Internet.getJSONObjectfromInternet(chooseTypeOfMovies, 1);
+        JSONObject jsonObject = Internet.getJSONObjectfromInternet(chooseTypeOfMovies, 1, lang);
         //получаем список фильмов
         ArrayList<Movie> movies = JSONformat.getMovieJSON(jsonObject);
         adapterForMovie.setM(movies);
@@ -175,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
     }
     private void downloadData(int method, int page) {
-       URL url = Internet.buildURL(method, page);
+       URL url = Internet.buildURL(method, page, lang);
        Bundle bundle = new Bundle();
        bundle.putString("url", url.toString());
        loaderManager.restartLoader(loaderid, bundle, this);

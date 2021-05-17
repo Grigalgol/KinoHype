@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KinoHype</string>
+    <string name="mageMovie">Картинка фильма</string>
+    <string name="Bes">Бестселлеры</string>
+    <string name="Top">Наивысший рейтинг</string>
+    <string name="Pop">Популярное</string>
+    <string name="pop">Популярные фильмы</string>
+    <string name="top">Наивысший рейтинг</string>
+    <string name="bes">Бестселлеры в мире кино</string>
+    <string name="Raiting">Рейтинг</string>
+    <string name="menu_main">Главная</string>
+    <string name="menu_love">Избранное</string>
+    <string name="touch_trailer">Запустить трейлер</string>
+</resources>

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,8 +30,12 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AboutFilmActivity extends AppCompatActivity {
+
+    //язык приложения
+    private static String lang;
 
     //переопределяем метод с меню
     @Override
@@ -77,6 +82,8 @@ public class AboutFilmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_film);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        lang = Locale.getDefault().getLanguage();
         imageViewPoster = findViewById(R.id.imageViewPoster);
         imageViewLove = findViewById(R.id.imageView3);
         textViewTitle = findViewById(R.id.textViewTitle);
@@ -127,8 +134,8 @@ public class AboutFilmActivity extends AppCompatActivity {
         //меняем заголовок экшн бара на название кино
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(movie.getTitle());
-        JSONObject jsonObjectTrailers = Internet.getJSONTrailerfromInternet(movie.getId());
-        JSONObject jsonObjectReviews = Internet.getJSONReviewsfromInternet(movie.getId());
+        JSONObject jsonObjectTrailers = Internet.getJSONTrailerfromInternet(movie.getId(), lang);
+        JSONObject jsonObjectReviews = Internet.getJSONReviewsfromInternet(movie.getId(), lang);
         //получаем из объектов json трейлеры и отзывы
         ArrayList<Trailer> trailers = JSONformat.getTrailersJSON(jsonObjectTrailers);
         ArrayList<Review> reviews = JSONformat.getReviewsJSON(jsonObjectReviews);
