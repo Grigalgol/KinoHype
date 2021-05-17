@@ -1,7 +1,13 @@
 package com.example.kinohype;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.content.AsyncTaskLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +41,7 @@ public class Internet {
     public static int TOP = 1;
     public static int BES = 2;
 
-    private static URL buildURLTiTrailer(int id) {
+    public static URL buildURLTiTrailer(int id) {
         //геним ссылку
         Uri uri = Uri.parse(String.format(baseURLvideo, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, LANGUAGE).build();
         try {
@@ -46,7 +52,7 @@ public class Internet {
         return null;
     }
 
-    private static URL buildURLToReviews(int id) {
+    public static URL buildURLToReviews(int id) {
         //геним ссылку
         Uri uri = Uri.parse(String.format(baseURLreviews, id)).buildUpon().appendQueryParameter(params_apikey, apikey).appendQueryParameter(params_language, LANGUAGE).build();
         try {
@@ -58,7 +64,7 @@ public class Internet {
     }
 
 
-    private static URL buildURL(int s, int page) {
+    public static URL buildURL(int s, int page) {
         String sort = null;
         switch (s) {
             case 0:
@@ -80,6 +86,80 @@ public class Internet {
             e.printStackTrace();
         }
         return result;
+    }
+
+
+    //загрузчик
+    public static class JSONloader extends AsyncTaskLoader<JSONObject> {
+
+        private Bundle bundle;
+        private OnStartLoadingListener onStartLoadingListener;
+
+        public interface OnStartLoadingListener {
+            void onStartLoading();
+        }
+
+        public void setOnStartLoadingListener(OnStartLoadingListener onStartLoadingListener) {
+            this.onStartLoadingListener = onStartLoadingListener;
+        }
+
+        public JSONloader(@NonNull Context context, Bundle bundle) {
+            super(context);
+            this.bundle = bundle;
+        }
+
+        @Override
+        protected void onStartLoading() {
+            super.onStartLoading();
+            if(onStartLoadingListener != null) {
+                onStartLoadingListener.onStartLoading();
+            }
+            forceLoad();
+        }
+
+        @Nullable
+        @Override
+        public JSONObject loadInBackground() {
+            if (bundle == null) {
+                return null;
+            }
+            String urlS = bundle.getString("url");
+            URL url = null;
+            try {
+                url = new URL(urlS);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            JSONObject res = null;
+            //~Если пусто, возврат 0
+            if (url == null) return null;
+            HttpURLConnection connection = null;
+            //открываем соединение
+            try {
+                StringBuilder builder = new StringBuilder();
+                connection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = connection.getInputStream(); //поток ввода
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader); //для чтения строками используем <-
+                //читаем данные
+                String s = bufferedReader.readLine();
+                while (s != null) {
+                    builder.append(s);
+                    s = bufferedReader.readLine();
+                }
+                try {
+                    res = new JSONObject(builder.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                //закрываем соединение
+                if (connection != null) connection.disconnect();
+            }
+            return res;
+        }
     }
 
     private static class JsonTask extends AsyncTask<URL, Void, JSONObject> {

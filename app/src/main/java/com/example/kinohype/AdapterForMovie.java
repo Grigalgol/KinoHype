@@ -61,7 +61,7 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder movieViewHolder, int i) {
         //если достигли конца списка и слушатель onSetInTheEnd не равен 0
-        if (i > m.size()-6 && onSetInTheEnd != null) {
+        if (m.size()>=20 &&  i > m.size()-6 && onSetInTheEnd != null) {
             onSetInTheEnd.onSetEnd();
         }
         //метод, который устанавливает в imageView картинку фильма из posterPath, спасибо, что объяснили пикассо
@@ -93,6 +93,11 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
             });
         }
     }
+    public void clearM() {
+        this.m.clear();
+        notifyDataSetChanged();
+    }
+
     //сеттер для установки нового массива
     public void setM(List<Movie> movies) {
         m = movies;
