@@ -14,4 +14,6 @@
     <string name="Hi_i">Hi! I liked the movie \"</string>
     <string name="advice_watching">\". I advise you to watch it!</string>
     <string name="How_do_you_want">How do you want to send a message?</string>
+    <string name="addSuccessfully">The movie was successfully added to the Favorites section</string>
+    <string name="addUnsuccessfully">The movie was successfully excluded from the Favorites section</string>
 </resources>

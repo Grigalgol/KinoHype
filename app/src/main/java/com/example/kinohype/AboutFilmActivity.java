@@ -148,10 +148,10 @@ public class AboutFilmActivity extends AppCompatActivity {
         if(loveMovie == null) {
             //пришлось создать конструктор, так как родительский класс нельзя передавать
             viewModel.insertLoveMovie(new LoveMovie(movie));
-            Toast.makeText(this, "Фильм успешно добавлен в раздел Избранное", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getResources().getString(R.string.addSuccessfully), Toast.LENGTH_SHORT).show();
         } else {
             viewModel.deleteLoveMovie(loveMovie);
-            Toast.makeText(this, "Фильм успешно исключен из раздела Избранное", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.addUnsuccessfully), Toast.LENGTH_SHORT).show();
         }
         setLove();
     }
