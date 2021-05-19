@@ -123,5 +123,14 @@
             app:layout_constraintTop_toBottomOf="@+id/recyclerViewTrailers"
             />
 
+        <ImageView
+            android:id="@+id/imageViewShare"
+            android:layout_width="@dimen/sizelove"
+            android:layout_height="@dimen/sizelove"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPoster"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/share"
+            android:onClick="onClickShare"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

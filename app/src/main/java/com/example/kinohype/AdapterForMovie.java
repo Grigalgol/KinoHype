@@ -68,6 +68,7 @@ public class AdapterForMovie extends RecyclerView.Adapter<AdapterForMovie.MovieV
         Movie movie = m.get(i);
         //изменить качество картинки можно тут (себе на будущее)
         Picasso.get().load(movie.getPosterPath()).into(movieViewHolder.imageViewSmallPoster);
+
     }
 
     @Override

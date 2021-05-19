@@ -160,4 +160,13 @@ public class AboutFilmActivity extends AppCompatActivity {
         if (loveMovie == null) imageViewLove.setImageResource(R.drawable.hearttouch);
         else imageViewLove.setImageResource(R.drawable.heartnotouch);
     }
+
+    public void onClickShare(View view) {
+        String msg = "Привет! Мне понравился фильм \"" + movie.getTitle() + "\". Советую его посмотреть!";
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, msg);
+        Intent chosenIntent = Intent.createChooser(intent,"Как вы хотите отправить сообщение?");
+        startActivity(chosenIntent);
+    }
 }
