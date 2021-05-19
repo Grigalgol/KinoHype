@@ -11,4 +11,7 @@
     <string name="menu_main">Main</string>
     <string name="menu_love">Favourite</string>
     <string name="touch_trailer">Launch the trailer</string>
+    <string name="Hi_i">Hi! I liked the movie \"</string>
+    <string name="advice_watching">\". I advise you to watch it!</string>
+    <string name="How_do_you_want">How do you want to send a message?</string>
 </resources>

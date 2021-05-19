@@ -162,11 +162,11 @@ public class AboutFilmActivity extends AppCompatActivity {
     }
 
     public void onClickShare(View view) {
-        String msg = "Привет! Мне понравился фильм \"" + movie.getTitle() + "\". Советую его посмотреть!";
+        String msg = getString(R.string.Hi_i) + movie.getTitle() + getString(R.string.advice_watching);
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, msg);
-        Intent chosenIntent = Intent.createChooser(intent,"Как вы хотите отправить сообщение?");
+        Intent chosenIntent = Intent.createChooser(intent,getString(R.string.How_do_you_want));
         startActivity(chosenIntent);
     }
 }

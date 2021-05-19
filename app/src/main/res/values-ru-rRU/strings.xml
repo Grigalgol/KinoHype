@@ -12,4 +12,7 @@
     <string name="menu_main">Главная</string>
     <string name="menu_love">Избранное</string>
     <string name="touch_trailer">Запустить трейлер</string>
+    <string name="Hi_i">Привет! Мне понравился фильм \"</string>
+    <string name="advice_watching">\". Советую его посмотреть!</string>
+    <string name="How_do_you_want">Как вы хотите отправить сообщение?</string>
 </resources>
