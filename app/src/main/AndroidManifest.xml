@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KinoHype">
-        <activity android:name=".LoveFilmActivity"></activity>
+        <activity android:name=".LaterFilmActivity"></activity>
+        <activity android:name=".LoveFilmActivity" />
         <activity android:name=".AboutFilmActivity" />
         <activity android:name=".FavoritesFilmsActivity" />
         <activity android:name=".MainActivity">

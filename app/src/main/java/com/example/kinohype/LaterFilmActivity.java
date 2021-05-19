@@ -4,25 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.example.kinohype.data.LaterMovie;
 import com.example.kinohype.data.LoveMovie;
-import com.example.kinohype.data.Movie;
 import com.example.kinohype.data.MViewModel;
+import com.example.kinohype.data.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoveFilmActivity extends AppCompatActivity {
+public class LaterFilmActivity extends AppCompatActivity {
 
     //переопределяем метод с меню
     @Override
@@ -53,27 +55,28 @@ public class LoveFilmActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private MViewModel MViewModel;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewLater;
     private AdapterForMovie adapter;
+    private MViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_love_film);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        recyclerView = findViewById(R.id.recyclerViewLove);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        setContentView(R.layout.activity_later_film);
+        recyclerViewLater = findViewById(R.id.recyclerViewLater);
+        recyclerViewLater.setLayoutManager(new GridLayoutManager(this, 2));
         adapter = new AdapterForMovie();
-        recyclerView.setAdapter(adapter);
-        MViewModel = ViewModelProviders.of(this).get(MViewModel.class);
-        LiveData<List<LoveMovie>> loveMovies = MViewModel.getLovemovies();
-        loveMovies.observe(this, new Observer<List<LoveMovie>>() {
+        recyclerViewLater.setAdapter(adapter);
+        viewModel = ViewModelProviders.of(this).get(MViewModel.class);
+        LiveData<List<LaterMovie>> laterMovies = viewModel.getLatermovies();
+        laterMovies.observe(this, new Observer<List<LaterMovie>>() {
+
+
             @Override
-            public void onChanged(List<LoveMovie> loveMovies) {
+            public void onChanged(List<LaterMovie> laterMovies) {
                 List<Movie> movies = new ArrayList<>();
-                if (loveMovies != null) {
-                    movies.addAll(loveMovies);
+                if (laterMovies != null) {
+                    movies.addAll(laterMovies);
                     //так как мы не можем в лист родительского класса вставить объект дочернего класса, делаем то, что выше
                     adapter.setM(movies);
                 }
@@ -86,7 +89,7 @@ public class LoveFilmActivity extends AppCompatActivity {
                 //переопределяем метод
                 Movie movie = adapter.getMovies().get(position);
                 //создаем интент и отправляем в новую активность наш фильмец
-                Intent intentGoToFilm = new Intent(LoveFilmActivity.this, AboutFilmActivity.class);
+                Intent intentGoToFilm = new Intent(LaterFilmActivity.this, AboutFilmActivity.class);
                 intentGoToFilm.putExtra("id", movie.getId());
                 startActivity(intentGoToFilm);
             }

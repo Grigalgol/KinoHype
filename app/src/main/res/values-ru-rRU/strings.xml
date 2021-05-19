@@ -15,6 +15,8 @@
     <string name="Hi_i">Привет! Мне понравился фильм \"</string>
     <string name="advice_watching">\". Советую его посмотреть!</string>
     <string name="How_do_you_want">Как вы хотите отправить сообщение?</string>
-    <string name="addSuccessfully">Фильм успешно добавлен в раздел Избранное</string>
-    <string name="addUnsuccessfully">Фильм успешно исключен из раздела Избранное</string>
+    <string name="addSuccessfully">Фильм успешно добавлен в раздел \"Избранное\"</string>
+    <string name="addUnsuccessfully">Фильм успешно исключен из раздела \"Избранное\"</string>
+    <string name="addLater">Фильм успешно добавлен в раздел \"Посмотреть позже\"</string>
+    <string name="deleteLater">Фильм успешно исключен из раздела \"Посмотреть позже\"</string>
 </resources>

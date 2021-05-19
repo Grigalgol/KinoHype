@@ -132,5 +132,15 @@
             app:srcCompat="@drawable/share"
             android:onClick="onClickShare"/>
 
+        <ImageView
+            android:id="@+id/imageViewlater"
+            android:layout_width="@dimen/sizelove"
+            android:layout_height="@dimen/sizelove"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/addlater"
+            android:onClick="onClickLater"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

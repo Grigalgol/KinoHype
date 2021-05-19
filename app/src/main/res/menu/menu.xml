@@ -2,4 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/menu_main" android:id="@+id/menu"/>
     <item android:title="@string/menu_love" android:id="@+id/love"/>
+    <item android:title="Посмотреть позже" android:id="@+id/later"/>
 </menu>

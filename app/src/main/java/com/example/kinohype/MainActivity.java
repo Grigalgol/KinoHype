@@ -13,20 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.JsonReader;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.kinohype.data.Movie;
-import com.example.kinohype.data.ViewModel;
+import com.example.kinohype.data.MViewModel;
 
 import org.json.JSONObject;
 
@@ -52,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static int mSort;
     private static boolean isLoading = false;
 
-    private ViewModel viewModel;
+    private MViewModel MViewModel;
     //идентификатор загрузчика
     private static final int loaderid = 932;
     private LoaderManager loaderManager;
@@ -78,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 Intent intent1 = new Intent(this, LoveFilmActivity.class);
                 startActivity(intent1);
                 break;
+            case R.id.later:
+                Intent intent2 = new Intent(this, LaterFilmActivity.class);
+                startActivity(intent2);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -92,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         lang = Locale.getDefault().getLanguage();
         //отвечает за загрузки в приложении
         loaderManager = LoaderManager.getInstance(this);
-        viewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        MViewModel = ViewModelProviders.of(this).get(MViewModel.class);
         //кнопки для переключения подборки кино
         buttonTop = findViewById(R.id.buttonTop);
         buttonBes = findViewById(R.id.buttonBes);
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        LiveData<List<Movie>> moviesLiveData = viewModel.getMovies();
+        LiveData<List<Movie>> moviesLiveData = MViewModel.getMovies();
         moviesLiveData.observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
@@ -208,12 +207,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(movies != null && !movies.isEmpty()) {
             //очищаем старые данные
             if(page == 1) {
-                viewModel.deleteAllMovies();
+                MViewModel.deleteAllMovies();
                 adapterForMovie.clearM();
             }
             //вставляем новые данные в цикле
             for (Movie movie : movies) {
-                viewModel.insertMovie(movie);
+                MViewModel.insertMovie(movie);
             }
             adapterForMovie.addM(movies);
             page++;

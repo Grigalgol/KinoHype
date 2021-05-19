@@ -16,4 +16,6 @@
     <string name="How_do_you_want">How do you want to send a message?</string>
     <string name="addSuccessfully">The movie was successfully added to the Favorites section</string>
     <string name="addUnsuccessfully">The movie was successfully excluded from the Favorites section</string>
+    <string name="addLater">The movie was successfully added to the Watch later section</string>
+    <string name="deleteLater">The movie was successfully excluded from the Watch later section</string>
 </resources>

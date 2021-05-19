@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,11 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kinohype.data.LaterMovie;
 import com.example.kinohype.data.LoveMovie;
 import com.example.kinohype.data.Movie;
 import com.example.kinohype.data.Review;
 import com.example.kinohype.data.Trailer;
-import com.example.kinohype.data.ViewModel;
+import com.example.kinohype.data.MViewModel;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -58,6 +58,10 @@ public class AboutFilmActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(this, LoveFilmActivity.class);
                 startActivity(intent1);
                 break;
+            case R.id.later:
+                Intent intent2 = new Intent(this, LaterFilmActivity.class);
+                startActivity(intent2);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -66,13 +70,15 @@ public class AboutFilmActivity extends AppCompatActivity {
 
     private ImageView imageViewLove;
     private ImageView imageViewPoster;
+    private ImageView imageViewLater;
     private TextView textViewTitle;
     private TextView textViewOriginalTitleplusDataOfRelease;
     private TextView textViewOwerview;
     private TextView textViewRaitingValue;
-    private ViewModel viewModel;
+    private MViewModel MViewModel;
     private Movie movie;
     private LoveMovie loveMovie;
+    private LaterMovie laterMovie;
     private RecyclerView recyclerViewTrailers;
     private RecyclerView recyclerViewReviews;
     private ReviewAdapter reviewAdapter;
@@ -86,20 +92,21 @@ public class AboutFilmActivity extends AppCompatActivity {
         lang = Locale.getDefault().getLanguage();
         imageViewPoster = findViewById(R.id.imageViewPoster);
         imageViewLove = findViewById(R.id.imageView3);
+        imageViewLater = findViewById(R.id.imageViewlater);
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewOriginalTitleplusDataOfRelease = findViewById(R.id.textViewOriginalTitle);
         textViewOwerview = findViewById(R.id.textViewOwerview);
         textViewRaitingValue = findViewById(R.id.textViewValueRaiting);
         Intent intent = getIntent();
-        if(intent != null && intent.hasExtra("id")) {
+        if (intent != null && intent.hasExtra("id")) {
             filmId = intent.getIntExtra("id", -10);
         } else {
             //закрываем активность
             finish();
         }
         //получаем фильм
-        viewModel = ViewModelProviders.of(this).get(ViewModel.class);
-        movie = viewModel.getMovieById(filmId);
+        MViewModel = ViewModelProviders.of(this).get(MViewModel.class);
+        movie = MViewModel.getMovieById(filmId);
         //с помощью пикассо устанавливаем картинку фильма (постер)
         Picasso.get().load(movie.getBigPosterPath()).into(imageViewPoster);
         //устанавливаем данные из класса Movie
@@ -109,12 +116,18 @@ public class AboutFilmActivity extends AppCompatActivity {
         double raiting = movie.getVoteAverage();
         textViewRaitingValue.setText(Double.toString(raiting));
         //в зависимости от рейтинга меняем его цвет
-        if(raiting<2.5) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color0_2_5));
-        if(raiting>=2.5 && raiting<6) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color2_5_6));
-        if(raiting>=6 && raiting<8) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color6_8));
-        if(raiting>=8 && raiting<9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color8_9));
-        if(raiting>=9) textViewRaitingValue.setTextColor(getResources().getColor(R.color.color9_10));
+        if (raiting < 2.5)
+            textViewRaitingValue.setTextColor(getResources().getColor(R.color.color0_2_5));
+        if (raiting >= 2.5 && raiting < 6)
+            textViewRaitingValue.setTextColor(getResources().getColor(R.color.color2_5_6));
+        if (raiting >= 6 && raiting < 8)
+            textViewRaitingValue.setTextColor(getResources().getColor(R.color.color6_8));
+        if (raiting >= 8 && raiting < 9)
+            textViewRaitingValue.setTextColor(getResources().getColor(R.color.color8_9));
+        if (raiting >= 9)
+            textViewRaitingValue.setTextColor(getResources().getColor(R.color.color9_10));
         setLove();
+        setLater();
         recyclerViewTrailers = findViewById(R.id.recyclerViewTrailers);
         recyclerViewReviews = findViewById(R.id.recyclerViewReviews);
         reviewAdapter = new ReviewAdapter();
@@ -142,23 +155,43 @@ public class AboutFilmActivity extends AppCompatActivity {
         reviewAdapter.setReviews(reviews);
         trailerAdapter.setTrailers(trailers);
     }
+
     //метод добавления в любимые фильмы путем нажатия на сердечко
     public void onClickFavorite(View view) {
         //проверка на наличие фильма
-        if(loveMovie == null) {
+        if (loveMovie == null) {
             //пришлось создать конструктор, так как родительский класс нельзя передавать
-            viewModel.insertLoveMovie(new LoveMovie(movie));
-            Toast.makeText(this,getResources().getString(R.string.addSuccessfully), Toast.LENGTH_SHORT).show();
+            MViewModel.insertLoveMovie(new LoveMovie(movie));
+            Toast.makeText(this, getResources().getString(R.string.addSuccessfully), Toast.LENGTH_SHORT).show();
         } else {
-            viewModel.deleteLoveMovie(loveMovie);
+            MViewModel.deleteLoveMovie(loveMovie);
             Toast.makeText(this, getResources().getString(R.string.addUnsuccessfully), Toast.LENGTH_SHORT).show();
         }
         setLove();
     }
+
     private void setLove() {
-        loveMovie = viewModel.getLoveMovieById(filmId);
+        loveMovie = MViewModel.getLoveMovieById(filmId);
         if (loveMovie == null) imageViewLove.setImageResource(R.drawable.hearttouch);
         else imageViewLove.setImageResource(R.drawable.heartnotouch);
+    }
+
+    public void onClickLater(View view) {
+        if (laterMovie == null) {
+            //пришлось создать конструктор, так как родительский класс нельзя передавать
+            MViewModel.insertLaterMovie(new LaterMovie(movie));
+            Toast.makeText(this, getResources().getString(R.string.addLater), Toast.LENGTH_SHORT).show();
+        } else {
+            MViewModel.deleteLaterMovie(laterMovie);
+            Toast.makeText(this, getResources().getString(R.string.deleteLater), Toast.LENGTH_SHORT).show();
+        }
+        setLater();
+    }
+
+    private void setLater() {
+        laterMovie = MViewModel.getLaterMovieById(filmId);
+        if (laterMovie == null) imageViewLater.setImageResource(R.drawable.addlater);
+        else imageViewLater.setImageResource(R.drawable.deletelater);
     }
 
     public void onClickShare(View view) {
@@ -166,7 +199,7 @@ public class AboutFilmActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, msg);
-        Intent chosenIntent = Intent.createChooser(intent,getString(R.string.How_do_you_want));
+        Intent chosenIntent = Intent.createChooser(intent, getString(R.string.How_do_you_want));
         startActivity(chosenIntent);
     }
 }
